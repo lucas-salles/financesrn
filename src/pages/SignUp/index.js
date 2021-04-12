@@ -1,17 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Platform} from 'react-native';
+
+import {AuthContext} from '../../contexts/auth';
 
 import {
   AreaInput,
   Background,
   Container,
   Input,
-  Logo,
   SubmitButton,
   SubmitText,
 } from '../SignIn/styles';
 
 const SignUp = () => {
+  const {user} = useContext(AuthContext);
+
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();

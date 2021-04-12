@@ -26,7 +26,7 @@ const AuthRoutes = () => {
           },
           headerTintColor: '#FFF',
           headerBackTitleVisible: false,
-          headerTitle: 'Cadastrar',
+          headerTitle: 'Cadastro',
         }}
       />
     </AuthStack.Navigator>
