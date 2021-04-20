@@ -18,10 +18,14 @@ import {
 const SignIn = () => {
   const navigation = useNavigation();
 
+  const { signIn } = useContext(AuthContext);
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  function handleLogin() {}
+  function handleLogin() {
+    signIn(email, password);
+  }
 
   return (
     <Background>
