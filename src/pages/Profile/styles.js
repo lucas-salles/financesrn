@@ -6,7 +6,7 @@ export const Container = styled.View`
   align-items: center;
 `;
 
-export const Nome = styled.Text`
+export const Name = styled.Text`
   text-align: center;
   font-size: 28px;
   margin-top: 25px;

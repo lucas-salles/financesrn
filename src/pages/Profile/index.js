@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 
+import Header from "../../components/Header";
+
 import { AuthContext } from "../../contexts/auth";
 
 import {
   Container,
-  Nome,
+  Name,
   NewLink,
   NewText,
   Logout,
@@ -19,7 +21,9 @@ const Profile = () => {
 
   return (
     <Container>
-      <Nome>{user?.name}</Nome>
+      <Header />
+
+      <Name>{user?.name}</Name>
 
       <NewLink onPress={() => navigation.navigate("Registrar")}>
         <NewText>Registrar gastos</NewText>
