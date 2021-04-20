@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
 export const Background = styled.View`
   flex: 1;
@@ -20,7 +20,7 @@ export const AreaInput = styled.View`
 `;
 
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: 'rgba(255, 255, 255, 0.2)',
+  placeholderTextColor: "rgba(255, 255, 255, 0.2)",
 })`
   background: rgba(0, 0, 0, 0.2);
   width: 90%;
@@ -47,7 +47,7 @@ export const SubmitText = styled.Text`
 `;
 
 export const Link = styled.TouchableOpacity`
-  margin-top: 5px;
+  margin-top: 20px;
   margin-bottom: 9px;
 `;
 

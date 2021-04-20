@@ -2784,7 +2784,7 @@ domexception@^2.0.1:
   dependencies:
     webidl-conversions "^5.0.0"
 
-dotenv@^8.2.0:
+dotenv@^8.0.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
@@ -5922,6 +5922,13 @@ react-native-codegen@^0.0.6:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
+
+react-native-dotenv@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-2.5.5.tgz#5450fe79859f8553e893129d9fccc855cd38ecd9"
+  integrity sha512-ODaFNUX52ZYfBLJ8WSEm87nv+HrwxeEoZchuwsPyEWwsC4ARRhklfsKTf1dg09UpPS31zx5IUV431fLvcepCsA==
+  dependencies:
+    dotenv "^8.0.0"
 
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"
