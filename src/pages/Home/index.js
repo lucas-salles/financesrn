@@ -25,7 +25,7 @@ const index = () => {
       <Header />
 
       <Container>
-        <Name>Teste</Name>
+        <Name>{user?.name}</Name>
         <Balance>R$ 120,00</Balance>
       </Container>
 
