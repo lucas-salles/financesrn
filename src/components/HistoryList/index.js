@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/Feather";
 
 import { Container, Type, IconView, TypeText, ValueText } from "./styles";
 
-const RecordList = ({ data }) => {
+const HistoryList = ({ data }) => {
   return (
     <Container>
       <Type>
@@ -22,4 +22,4 @@ const RecordList = ({ data }) => {
   );
 };
 
-export default RecordList;
+export default HistoryList;

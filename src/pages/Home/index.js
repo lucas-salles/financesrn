@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 
 import Header from "../../components/Header";
-import RecordList from "../../components/RecordList";
+import HistoryList from "../../components/HistoryList";
 
 import { AuthContext } from "../../contexts/auth";
 
@@ -35,7 +35,7 @@ const index = () => {
         showsVerticalScrollIndicator={false}
         data={record}
         keyExtractor={item => item.key}
-        renderItem={({ item }) => <RecordList data={item} />}
+        renderItem={({ item }) => <HistoryList data={item} />}
       />
     </Background>
   );
