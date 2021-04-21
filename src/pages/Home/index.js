@@ -1,18 +1,31 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Alert } from "react-native";
+import { Alert, Platform, TouchableOpacity } from "react-native";
 import { format, isBefore } from "date-fns";
 
 import Header from "../../components/Header";
 import HistoryList from "../../components/HistoryList";
+import DatePicker from "../../components/DatePicker";
 
 import { AuthContext } from "../../contexts/auth";
 import firebase from "../../services/firebaseConnection";
 
-import { Background, Container, Name, Balance, Title, List } from "./styles";
+import Icon from "react-native-vector-icons/MaterialIcons";
+
+import {
+  Background,
+  Container,
+  Name,
+  Balance,
+  Title,
+  List,
+  Area,
+} from "./styles";
 
 const index = () => {
   const [historic, setHistoric] = useState([]);
   const [balance, setBalance] = useState(0);
+  const [newDate, setNewDate] = useState(new Date());
+  const [show, setShow] = useState(false);
 
   const { user } = useContext(AuthContext);
   const uid = user?.uid;
@@ -32,7 +45,7 @@ const index = () => {
         .ref("history")
         .child(uid)
         .orderByChild("date")
-        .equalTo(format(new Date(), "dd/MM/yyyy"))
+        .equalTo(format(newDate, "dd/MM/yyyy"))
         .limitToLast(10)
         .on("value", snapshot => {
           setHistoric([]);
@@ -51,7 +64,7 @@ const index = () => {
     }
 
     loadList();
-  }, [firebase, setHistoric, setBalance]);
+  }, [firebase, setHistoric, setBalance, newDate]);
 
   function handleDelete(data) {
     const [day, month, year] = data.date.split("/");
@@ -109,6 +122,19 @@ const index = () => {
       });
   }
 
+  function handleShowPicker() {
+    setShow(true);
+  }
+
+  function handleClose() {
+    setShow(false);
+  }
+
+  const onChange = date => {
+    setShow(Platform.OS === "ios");
+    setNewDate(date);
+  };
+
   return (
     <Background>
       <Header />
@@ -120,7 +146,12 @@ const index = () => {
         </Balance>
       </Container>
 
-      <Title>Últimas movimentações</Title>
+      <Area>
+        <TouchableOpacity onPress={handleShowPicker}>
+          <Icon name="event" color="#FFF" size={30} />
+        </TouchableOpacity>
+        <Title>Últimas movimentações</Title>
+      </Area>
 
       <List
         showsVerticalScrollIndicator={false}
@@ -130,6 +161,10 @@ const index = () => {
           <HistoryList data={item} deleteItem={handleDelete} />
         )}
       />
+
+      {show && (
+        <DatePicker onClose={handleClose} date={newDate} onChange={onChange} />
+      )}
     </Background>
   );
 };
