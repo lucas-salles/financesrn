@@ -51,6 +51,7 @@ const SignUp = () => {
             placeholder="Senha"
             autoCorrect={false}
             autoCapitalize="none"
+            secureTextEntry
             value={password}
             onChangeText={text => setPassword(text)}
           />

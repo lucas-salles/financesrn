@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <Container>
       <ButtonMenu onPress={() => navigation.toggleDrawer()}>
-        <Icon name="menu" color="#FFF" size={30} />
+        <Icon name="menu" color="#FFF" size={35} />
       </ButtonMenu>
     </Container>
   );
