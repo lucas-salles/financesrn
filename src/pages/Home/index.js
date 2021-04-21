@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { format } from "date-fns";
+import { Alert } from "react-native";
+import { format, isPast } from "date-fns";
 
 import Header from "../../components/Header";
 import HistoryList from "../../components/HistoryList";
@@ -41,6 +42,7 @@ const index = () => {
               key: childItem.key,
               type: childItem.val().type,
               value: childItem.val().value,
+              date: childItem.val().date,
             };
 
             setHistoric(oldArray => [...oldArray, list].reverse());
@@ -49,7 +51,54 @@ const index = () => {
     }
 
     loadList();
-  }, [setHistoric, setBalance]);
+  }, [firebase, setHistoric, setBalance]);
+
+  function handleDelete(data) {
+    if (isPast(new Date(data.date))) {
+      alert("Você não pode excluir um registro antigo!");
+      return;
+    }
+
+    Alert.alert(
+      "Cuidado Atenção!",
+      `Você deseja excluir ${data.type} - Valor ${data.value}`,
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Continuar",
+          onPress: () => handleDeleteSuccess(data),
+        },
+      ],
+    );
+  }
+
+  async function handleDeleteSuccess(data) {
+    await firebase
+      .database()
+      .ref("history")
+      .child(uid)
+      .child(data.key)
+      .remove()
+      .then(async () => {
+        let currentBalance = balance;
+        data.type === "despesa"
+          ? (currentBalance += parseFloat(data.value))
+          : (currentBalance -= parseFloat(data.value));
+
+        await firebase
+          .database()
+          .ref("users")
+          .child(uid)
+          .child("balance")
+          .set(currentBalance);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
   return (
     <Background>
@@ -68,7 +117,9 @@ const index = () => {
         showsVerticalScrollIndicator={false}
         data={historic}
         keyExtractor={item => item.key}
-        renderItem={({ item }) => <HistoryList data={item} />}
+        renderItem={({ item }) => (
+          <HistoryList data={item} deleteItem={handleDelete} />
+        )}
       />
     </Background>
   );
