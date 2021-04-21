@@ -1,24 +1,55 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { format } from "date-fns";
 
 import Header from "../../components/Header";
 import HistoryList from "../../components/HistoryList";
 
 import { AuthContext } from "../../contexts/auth";
+import firebase from "../../services/firebaseConnection";
 
 import { Background, Container, Name, Balance, Title, List } from "./styles";
 
 const index = () => {
-  const [record, setRecord] = useState([
-    { key: "1", type: "receita", value: 1200 },
-    { key: "2", type: "despesa", value: 200 },
-    { key: "3", type: "receita", value: 100 },
-    { key: "4", type: "receita", value: 1000 },
-    { key: "5", type: "despesa", value: 1000 },
-    { key: "6", type: "receita", value: 1000 },
-    { key: "7", type: "despesa", value: 1000 },
-    { key: "8", type: "receita", value: 1000 },
-  ]);
+  const [historic, setHistoric] = useState([]);
+  const [balance, setBalance] = useState(0);
+
   const { user } = useContext(AuthContext);
+  const uid = user?.uid;
+
+  useEffect(() => {
+    async function loadList() {
+      await firebase
+        .database()
+        .ref("users")
+        .child(uid)
+        .on("value", snapshot => {
+          setBalance(snapshot.val().balance);
+        });
+
+      await firebase
+        .database()
+        .ref("history")
+        .child(uid)
+        .orderByChild("date")
+        .equalTo(format(new Date(), "dd/MM/yy"))
+        .limitToLast(10)
+        .on("value", snapshot => {
+          setHistoric([]);
+
+          snapshot.forEach(childItem => {
+            const list = {
+              key: childItem.key,
+              type: childItem.val().type,
+              value: childItem.val().value,
+            };
+
+            setHistoric(oldArray => [...oldArray, list].reverse());
+          });
+        });
+    }
+
+    loadList();
+  }, []);
 
   return (
     <Background>
@@ -26,14 +57,16 @@ const index = () => {
 
       <Container>
         <Name>{user?.name}</Name>
-        <Balance>R$ 120,00</Balance>
+        <Balance>
+          R$ {balance.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")}
+        </Balance>
       </Container>
 
       <Title>Últimas movimentações</Title>
 
       <List
         showsVerticalScrollIndicator={false}
-        data={record}
+        data={historic}
         keyExtractor={item => item.key}
         renderItem={({ item }) => <HistoryList data={item} />}
       />

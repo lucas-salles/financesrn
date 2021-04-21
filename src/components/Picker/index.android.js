@@ -7,7 +7,7 @@ const Picker = ({ type, onChange }) => {
   return (
     <PickerView>
       <PickerSelect
-        style={{ width: "100%", color: "#000" }}
+        style={{ width: "100%", color: "#222" }}
         selectedValue={type}
         onValueChange={value => onChange(value)}>
         <PickerSelect.Item label="Receita" value="receita" />
