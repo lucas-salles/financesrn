@@ -59,7 +59,7 @@ const New = () => {
       .set({
         type,
         value: parseFloat(value),
-        date: format(new Date(), "dd/MM/yy"),
+        date: format(new Date(), "dd/MM/yyyy"),
       });
 
     const user = firebase.database().ref("users").child(uid);
