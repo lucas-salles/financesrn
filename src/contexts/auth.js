@@ -1,12 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import firebase from "../services/firebaseConnection";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadingAuth, setLoadingAuth] = useState(false);
 
   useEffect(() => {
     async function loadStorage() {
@@ -20,6 +21,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   async function signIn(email, password) {
+    setLoadingAuth(true);
     await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -43,10 +45,14 @@ const AuthProvider = ({ children }) => {
       })
       .catch(error => {
         alert(error.code);
+      })
+      .finally(() => {
+        setLoadingAuth(false);
       });
   }
 
   async function signUp(name, email, password) {
+    setLoadingAuth(true);
     await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -73,6 +79,9 @@ const AuthProvider = ({ children }) => {
       })
       .catch(error => {
         alert(error.code);
+      })
+      .finally(() => {
+        setLoadingAuth(false);
       });
   }
 
@@ -89,7 +98,15 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, user, loading, signUp, signIn, signOut }}>
+      value={{
+        signed: !!user,
+        user,
+        loading,
+        loadingAuth,
+        signUp,
+        signIn,
+        signOut,
+      }}>
       {children}
     </AuthContext.Provider>
   );

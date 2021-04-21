@@ -18,7 +18,7 @@ const index = () => {
 
   useEffect(() => {
     async function loadList() {
-      await firebase
+      firebase
         .database()
         .ref("users")
         .child(uid)
@@ -26,7 +26,7 @@ const index = () => {
           setBalance(snapshot.val().balance);
         });
 
-      await firebase
+      firebase
         .database()
         .ref("history")
         .child(uid)
@@ -49,7 +49,7 @@ const index = () => {
     }
 
     loadList();
-  }, []);
+  }, [setHistoric, setBalance]);
 
   return (
     <Background>
