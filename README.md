@@ -21,7 +21,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ## Rodando o Projeto
 
-Para clonar e executar esta aplicação, você precisará de [Git](https://git-scm.com/) e [Node.js](https://nodejs.org/en/) + [Yarn v1.13](https://yarnpkg.com/) instalados na sua máquina. Você também precisará criar um app na sua conta do [Firebase](https://firebase.google.com/). Após clonar este repositório, renomeie o arquivo .env.example para .env e insira as suas credenciais do firebase. Da sua linha de comando execute:
+Para clonar e executar esta aplicação, você precisará de [Git](https://git-scm.com/) e [Node.js](https://nodejs.org/en/) + [Yarn](https://yarnpkg.com/) instalados na sua máquina. Você também precisará criar um app na sua conta do [Firebase](https://firebase.google.com/). Após clonar este repositório, renomeie o arquivo .env.example para .env e insira as suas credenciais do firebase. Da sua linha de comando execute:
 
 ```bash
 # Clone este repositório
