@@ -33,9 +33,6 @@ $ cd financesrn
 # Instale as dependências
 $ yarn install
 
-# Execute o app (IOS)
-$ yarn ios --simulator="iPhone XS Max"
-
 # Execute o app (Android)
 $ yarn android
 ```
